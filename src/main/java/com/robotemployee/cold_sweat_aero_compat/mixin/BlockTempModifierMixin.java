@@ -45,10 +45,6 @@ import java.util.function.Function;
 
 @Mixin(BlockTempModifier.class)
 public class BlockTempModifierMixin {
-
-    @Unique
-    private static final Logger LOGGER = LogUtils.getLogger();
-
     @Shadow
     List<Triplet<BlockPos, BlockTemp, Double>> triggers;
 
