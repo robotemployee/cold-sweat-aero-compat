@@ -1,0 +1,15 @@
+{
+  "required": true,
+  "package": "com.robotemployee.cold_sweat_aero_compat.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "client": [
+  ],
+  "mixins": [
+    "BiomeTempModifierMixin",
+    "BlockTempModifierMixin",
+    "HearthBlockEntityMixin",
+    "TemperatureMixin",
+    "WorldHelperMixin"
+  ]
+
+}
