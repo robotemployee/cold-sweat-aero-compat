@@ -1,5 +1,6 @@
 package com.robotemployee.cold_sweat_aero_compat.mixin;
 
+import com.mojang.logging.LogUtils;
 import com.momosoftworks.coldsweat.api.registry.BlockTempRegistry;
 import com.momosoftworks.coldsweat.api.temperature.block_temp.BlockTemp;
 import com.momosoftworks.coldsweat.api.temperature.modifier.BlockTempModifier;
@@ -26,6 +27,7 @@ import net.minecraft.world.level.chunk.ChunkAccess;
 import net.minecraft.world.level.chunk.LevelChunkSection;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
+import org.slf4j.Logger;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
@@ -43,6 +45,9 @@ import java.util.function.Function;
 
 @Mixin(BlockTempModifier.class)
 public class BlockTempModifierMixin {
+
+    @Unique
+    private static final Logger LOGGER = LogUtils.getLogger();
 
     @Shadow
     List<Triplet<BlockPos, BlockTemp, Double>> triggers;
@@ -84,7 +89,7 @@ public class BlockTempModifierMixin {
         // get a list of Vector3s to check
         // plotyard positions for the sublevels that are around
         ArrayList<Vec3> placesToCheck = new ArrayList<>();
-        for (SubLevel subLevel : subLevels) placesToCheck.add(subLevel.logicalPose().transformNormalInverse(entity.position()));
+        for (SubLevel subLevel : subLevels) placesToCheck.add(subLevel.logicalPose().transformPositionInverse(entity.position()));
         placesToCheck.add(entity.position());
 
         blockTempTotals.clear();
