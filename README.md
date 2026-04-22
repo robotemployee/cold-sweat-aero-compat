@@ -2,6 +2,6 @@
 
 Human written
 
-Publishing to Modrinth soon
+[Modrinth Link](https://modrinth.com/mod/cold-sweat-sable-compat)
 
 based on NeoForge's ModDevGradle template
