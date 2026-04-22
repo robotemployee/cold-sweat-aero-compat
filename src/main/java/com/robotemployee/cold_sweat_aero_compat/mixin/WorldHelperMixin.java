@@ -63,10 +63,13 @@ public class WorldHelperMixin {
     }
 
 
+    /*
     @Inject(method = "getBlockTemperature", at = @At("TAIL"))
     private static void onGetBlockTemperature(Level level, BlockState block, CallbackInfoReturnable<Double> cir) {
         csac$LOGGER.info("Getting block temperature for " + block + ", equals " + cir.getReturnValue());
     }
+
+     */
 
     // make it so that it considers the water temperature of the biome
     @ModifyVariable(method = "getWaterTemperatureAt", at = @At("HEAD"), index = 1, argsOnly = true)
@@ -111,7 +114,7 @@ public class WorldHelperMixin {
             highestMaxHeatingLevel = Math.max(result.getFirst(), highestMaxHeatingLevel);
         }
 
-        csac$LOGGER.info("resulting max cool: {} max heat: {}", highestMaxCoolingLevel, highestMaxHeatingLevel);
+        //csac$LOGGER.info("resulting max cool: {} max heat: {}", highestMaxCoolingLevel, highestMaxHeatingLevel);
         cir.setReturnValue(Pair.of(highestMaxCoolingLevel, highestMaxHeatingLevel));
     }
 
@@ -145,11 +148,13 @@ public class WorldHelperMixin {
         return Pair.of(maxCoolingLevel, maxHeatingLevel);
     }
 
+    /*
     @Inject(method = "getTemperatureAt", at = @At("HEAD"))
     private static void getTemperatureAt(Level level, BlockPos pos, CallbackInfoReturnable<Double> cir) {
         csac$LOGGER.info("Getting temperature for " + pos);
-        LogUtils.getLogger().info("if you see this something's weird");
     }
+
+     */
 
     // TEMPERATURE
 
@@ -168,7 +173,7 @@ public class WorldHelperMixin {
             DummyPlayer dummyPlayer = WorldHelper.getDummyPlayer(level);
             dummyPlayer.setPos(examined);
             modifiers.addAll(csac$getDummyModifiers(dummyPlayer));
-            csac$LOGGER.info("Adding modifiers " + csac$getDummyModifiers(dummyPlayer) + " for position " + examined);
+            //csac$LOGGER.info("Adding modifiers " + csac$getDummyModifiers(dummyPlayer) + " for position " + examined);
 
             insulations.add(csac$copeGetInsulationAt(level, BlockPos.containing(examined), 2));
         }

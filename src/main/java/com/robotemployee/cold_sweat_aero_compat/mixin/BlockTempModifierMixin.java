@@ -45,6 +45,18 @@ import java.util.function.Function;
 
 @Mixin(BlockTempModifier.class)
 public class BlockTempModifierMixin {
+    // so
+    // here's what we're gonna do
+
+    // the calculate function is basically made of 3 parts:
+    // 1. setup, which includes getting the position to iterate on
+    // 2. a giant for loop that iterates on the positions near it and collects the temperatures in various places
+    // 3. some checks and returning the result
+
+    // so what we're going to do is split it up / surgically move the position-related parts of the function to another function
+    // then, for each sublevel around you, it calls those position-related parts for your corresponding plotyard positions
+    // aggregating all the results, then continues like normal
+
     @Shadow
     List<Triplet<BlockPos, BlockTemp, Double>> triggers;
 
@@ -119,6 +131,8 @@ public class BlockTempModifierMixin {
             }
         }
 
+        // this may be dangerous but we'll see
+        // probably not tho but whatevs
         while(this.chunks.size() >= 16) {
             this.chunks.remove(this.chunks.keySet().iterator().next());
         }

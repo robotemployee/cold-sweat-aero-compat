@@ -7,6 +7,11 @@
   "mixins": [
     "BiomeTempModifierMixin",
     "BlockTempModifierMixin",
+    "CaveBiomeTempModifierMixin",
+    "ElevationTempModifierMixin",
+    "EntitiesTempModifierMixin",
+    "EntityClimateTempModifierMixin",
+    "EntityTempDataMixin",
     "HearthBlockEntityMixin",
     "TemperatureMixin",
     "WorldHelperMixin"

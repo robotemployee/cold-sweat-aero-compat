@@ -3,3 +3,5 @@
 Human written
 
 Publishing to Modrinth soon
+
+based on NeoForge's ModDevGradle template
