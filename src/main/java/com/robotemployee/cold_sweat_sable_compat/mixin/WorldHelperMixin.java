@@ -1,4 +1,4 @@
-package com.robotemployee.cold_sweat_aero_compat.mixin;
+package com.robotemployee.cold_sweat_sable_compat.mixin;
 
 import com.mojang.datafixers.util.Pair;
 import com.mojang.logging.LogUtils;
@@ -10,18 +10,15 @@ import com.momosoftworks.coldsweat.common.blockentity.HearthBlockEntity;
 import com.momosoftworks.coldsweat.util.entity.DummyPlayer;
 import com.momosoftworks.coldsweat.util.math.CSMath;
 import com.momosoftworks.coldsweat.util.world.WorldHelper;
-import com.robotemployee.cold_sweat_aero_compat.ColdSweatAeroCompat;
+import com.robotemployee.cold_sweat_sable_compat.ColdSweatSableCompat;
 import dev.ryanhcode.sable.ActiveSableCompanion;
-import dev.ryanhcode.sable.companion.SableCompanion;
 import dev.ryanhcode.sable.companion.math.BoundingBox3d;
 import dev.ryanhcode.sable.sublevel.SubLevel;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Position;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkAccess;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
@@ -58,7 +55,7 @@ public class WorldHelperMixin {
         aabb.setMaxY(aabb.getCenter().y() + maxDistance);
 
         if (!(levelAccessor instanceof Level level)) return;
-        boolean hasSublevel = ColdSweatAeroCompat.SABLE_COMPANION.getAllIntersecting(level, new BoundingBox3d(aabb)).iterator().hasNext();
+        boolean hasSublevel = ColdSweatSableCompat.SABLE_COMPANION.getAllIntersecting(level, new BoundingBox3d(aabb)).iterator().hasNext();
         cir.setReturnValue(!hasSublevel);
     }
 
@@ -74,7 +71,7 @@ public class WorldHelperMixin {
     // make it so that it considers the water temperature of the biome
     @ModifyVariable(method = "getWaterTemperatureAt", at = @At("HEAD"), index = 1, argsOnly = true)
     private static BlockPos modifyGetWaterTemperaturePos(BlockPos pos, Level level) {
-        ActiveSableCompanion companion = ColdSweatAeroCompat.SABLE_COMPANION;
+        ActiveSableCompanion companion = ColdSweatSableCompat.SABLE_COMPANION;
         if (companion.isInPlotGrid(level, pos)) return BlockPos.containing(companion.projectOutOfSubLevel(level, pos.getCenter()));
         return pos;
     }
@@ -83,8 +80,8 @@ public class WorldHelperMixin {
     // only feed in non plotyard positions
     @ModifyVariable(method = "getInsulationAt", at = @At("HEAD"), index = 1, argsOnly = true)
     private static BlockPos modifyInsulationPositionToBeOutOfPlotyard(BlockPos pos, Level level) {
-        if (ColdSweatAeroCompat.SABLE_COMPANION.isInPlotGrid(level, pos)) {
-            return BlockPos.containing(ColdSweatAeroCompat.SABLE_COMPANION.projectOutOfSubLevel(level, pos.getCenter()));
+        if (ColdSweatSableCompat.SABLE_COMPANION.isInPlotGrid(level, pos)) {
+            return BlockPos.containing(ColdSweatSableCompat.SABLE_COMPANION.projectOutOfSubLevel(level, pos.getCenter()));
         }
         return pos;
     }
@@ -94,7 +91,7 @@ public class WorldHelperMixin {
     @SuppressWarnings("UnstableApiUsage")
     @Inject(method = "getInsulationAt", at = @At("TAIL"), cancellable = true)
     private static void getInsulationAtIncludingSubships(Level level, BlockPos pos, int chunkRadius, CallbackInfoReturnable<Pair<Integer, Integer>> cir) {
-        ActiveSableCompanion companion = ColdSweatAeroCompat.SABLE_COMPANION;
+        ActiveSableCompanion companion = ColdSweatSableCompat.SABLE_COMPANION;
 
         ArrayList<Pair<Integer, Integer>> results = new ArrayList<>();
         for (SubLevel subLevel : companion.getAllIntersecting(level, new BoundingBox3d(pos))) {
@@ -160,7 +157,7 @@ public class WorldHelperMixin {
 
     @Inject(method = "getTemperatureAt", at = @At("HEAD"), cancellable = true)
     private static void modifyGetTemperatureAt(Level level, BlockPos rawPos, CallbackInfoReturnable<Double> cir) {
-        ActiveSableCompanion companion = ColdSweatAeroCompat.SABLE_COMPANION;
+        ActiveSableCompanion companion = ColdSweatSableCompat.SABLE_COMPANION;
         // if it's in a plot grid turn it into worldly stuff
         BlockPos pos = companion.isInPlotGrid(level, rawPos) ? BlockPos.containing(companion.projectOutOfSubLevel(level, rawPos.getCenter())) : rawPos;
 

@@ -1,6 +1,5 @@
-package com.robotemployee.cold_sweat_aero_compat.mixin;
+package com.robotemployee.cold_sweat_sable_compat.mixin;
 
-import com.mojang.logging.LogUtils;
 import com.momosoftworks.coldsweat.api.temperature.modifier.TempModifier;
 import com.momosoftworks.coldsweat.api.util.Temperature;
 import net.minecraft.world.entity.LivingEntity;

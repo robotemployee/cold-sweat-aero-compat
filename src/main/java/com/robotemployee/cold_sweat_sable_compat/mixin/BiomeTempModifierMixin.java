@@ -1,9 +1,9 @@
-package com.robotemployee.cold_sweat_aero_compat.mixin;
+package com.robotemployee.cold_sweat_sable_compat.mixin;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.momosoftworks.coldsweat.api.temperature.modifier.BiomeTempModifier;
-import com.robotemployee.cold_sweat_aero_compat.ColdSweatAeroCompat;
+import com.robotemployee.cold_sweat_sable_compat.ColdSweatSableCompat;
 import dev.ryanhcode.sable.companion.SableCompanion;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.LivingEntity;
@@ -20,7 +20,7 @@ public class BiomeTempModifierMixin {
     @WrapOperation(method = "calculate", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/LivingEntity;blockPosition()Lnet/minecraft/core/BlockPos;"))
     private BlockPos makeBlockPosBeNotPlotyard(LivingEntity instance, Operation<BlockPos> original) {
         BlockPos originalPos = original.call(instance);
-        SableCompanion companion = ColdSweatAeroCompat.SABLE_COMPANION;
+        SableCompanion companion = ColdSweatSableCompat.SABLE_COMPANION;
         if (companion.isInPlotGrid(instance.level(), originalPos)) return BlockPos.containing(companion.projectOutOfSubLevel(instance.level(), originalPos.getCenter()));
         return originalPos;
     }

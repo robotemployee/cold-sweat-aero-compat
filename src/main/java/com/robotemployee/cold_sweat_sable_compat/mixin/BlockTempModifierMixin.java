@@ -1,6 +1,5 @@
-package com.robotemployee.cold_sweat_aero_compat.mixin;
+package com.robotemployee.cold_sweat_sable_compat.mixin;
 
-import com.mojang.logging.LogUtils;
 import com.momosoftworks.coldsweat.api.registry.BlockTempRegistry;
 import com.momosoftworks.coldsweat.api.temperature.block_temp.BlockTemp;
 import com.momosoftworks.coldsweat.api.temperature.modifier.BlockTempModifier;
@@ -11,14 +10,13 @@ import com.momosoftworks.coldsweat.core.init.ModAdvancementTriggers;
 import com.momosoftworks.coldsweat.util.entity.DummyPlayer;
 import com.momosoftworks.coldsweat.util.math.CSMath;
 import com.momosoftworks.coldsweat.util.world.WorldHelper;
-import com.robotemployee.cold_sweat_aero_compat.ColdSweatAeroCompat;
+import com.robotemployee.cold_sweat_sable_compat.ColdSweatSableCompat;
 import dev.ryanhcode.sable.ActiveSableCompanion;
 import dev.ryanhcode.sable.companion.math.BoundingBox3d;
 import dev.ryanhcode.sable.sublevel.SubLevel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
@@ -27,11 +25,9 @@ import net.minecraft.world.level.chunk.ChunkAccess;
 import net.minecraft.world.level.chunk.LevelChunkSection;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-import org.slf4j.Logger;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
-import org.spongepowered.asm.mixin.gen.Invoker;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
@@ -85,7 +81,7 @@ public class BlockTempModifierMixin {
         BlockTempModifier self = (BlockTempModifier) (Object) this;
         int range = self.getNBT().contains("RangeOverride", 3) ? self.getNBT().getInt("RangeOverride") : (Integer) ConfigSettings.BLOCK_RANGE.get();
 
-        ActiveSableCompanion companion = ColdSweatAeroCompat.SABLE_COMPANION;
+        ActiveSableCompanion companion = ColdSweatSableCompat.SABLE_COMPANION;
         // first, turn into worldly coordinates
         BlockPos checked = companion.isInPlotGrid(entity) ? BlockPos.containing(companion.projectOutOfSubLevel(entity.level(), entity.position())) : entity.blockPosition();
         AABB aabb = new AABB(checked).inflate(range);

@@ -1,11 +1,11 @@
-package com.robotemployee.cold_sweat_aero_compat.mixin;
+package com.robotemployee.cold_sweat_sable_compat.mixin;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.mojang.logging.LogUtils;
 import com.momosoftworks.coldsweat.common.blockentity.HearthBlockEntity;
 import com.momosoftworks.coldsweat.common.capability.handler.EntityTempManager;
-import com.robotemployee.cold_sweat_aero_compat.ColdSweatAeroCompat;
+import com.robotemployee.cold_sweat_sable_compat.ColdSweatSableCompat;
 import dev.ryanhcode.sable.ActiveSableCompanion;
 import dev.ryanhcode.sable.sublevel.SubLevel;
 import net.minecraft.core.BlockPos;
@@ -42,7 +42,7 @@ public class HearthBlockEntityMixin {
         // suppressed because Vec3 inherits from Position and they just changed it to Position so presumably it's more generic
         // but a bunch of alarms go off because the Vec3 one (which it selects automatically as the overload) is going away
         //@SuppressWarnings("UnstableApiUsage")
-        Vec3 worldPosition = ColdSweatAeroCompat.SABLE_COMPANION.projectOutOfSubLevel(instance, position);
+        Vec3 worldPosition = ColdSweatSableCompat.SABLE_COMPANION.projectOutOfSubLevel(instance, position);
 
         List<Entity> originalEntities = original.call(instance, entity, boundingBox, predicate);
         double size = boundingBox.getXsize();
@@ -66,9 +66,9 @@ public class HearthBlockEntityMixin {
     @WrapOperation(method = "tick", at = @At(value = "INVOKE", target = "Lcom/momosoftworks/coldsweat/common/blockentity/HearthBlockEntity;isAffectingPos(Ljava/util/List;)Z"))
     private boolean modifyCheckedAffectingPositions(HearthBlockEntity instance, List<BlockPos> positions, Operation<Boolean> original) {
         List<BlockPos> usedPositions;
-        if (ColdSweatAeroCompat.SABLE_COMPANION.isInPlotGrid(instance.getLevel(), instance.getBlockPos())) {
+        if (ColdSweatSableCompat.SABLE_COMPANION.isInPlotGrid(instance.getLevel(), instance.getBlockPos())) {
             //csac$LOGGER.info("we're in a plot grid, currently working with " + positions + " and we're at " + instance.getBlockPos());
-            ActiveSableCompanion companion = ColdSweatAeroCompat.SABLE_COMPANION;
+            ActiveSableCompanion companion = ColdSweatSableCompat.SABLE_COMPANION;
             SubLevel subLevel = companion.getContaining(instance.getLevel(), instance.getBlockPos());
             //csac$LOGGER.info("sublevel: " + subLevel);
             if (subLevel == null) {
