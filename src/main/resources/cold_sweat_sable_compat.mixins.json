@@ -2,6 +2,7 @@
   "required": true,
   "package": "com.robotemployee.cold_sweat_sable_compat.mixin",
   "compatibilityLevel": "JAVA_21",
+  "plugin": "com.robotemployee.cold_sweat_sable_compat.mixin.ColdSweatSableCompatMixinPlugin",
   "client": [
   ],
   "mixins": [
@@ -13,6 +14,7 @@
     "EntityClimateTempModifierMixin",
     "EntityTempDataMixin",
     "HearthBlockEntityMixin",
+    "StormTempModifierMixin",
     "WorldHelperMixin"
   ]
 
